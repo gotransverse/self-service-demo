@@ -1,0 +1,59 @@
+<div class="home-banner">
+    <div class="container">
+	  <div class="row">
+	  <div class="center-container">
+{% if not session['logged_in'] %}
+    <p>You must <a href="/">log in</a> to view account information</p>
+    </div>
+      </div>
+    </div>
+</div>
+{% else %}
+     <!-- Begin Product Body -->
+	<div class="login">
+		<div class="login-screen" style="color: #777">
+			<div class="app-title">
+				<h2 style="color: #777">Invoices</h2>
+			</div>
+
+			<div class="login-form">
+                <hr>
+                {% if not data %}
+                <br>
+				<div class="control-group">
+                    <b>No Outstanding Invoices</b>
+                </div>
+                {% else %}
+                    {% for item in data %}
+				<div class="control-group">
+                    <b>Invoice #: </b> {{ item['invoice_num'] }}
+				</div>
+                 <div class="control-group">
+                    <b>Invoice Total: </b> {{ "${:.2f}".format(item['amount']) }}
+				</div>
+                <div class="control-group">
+                    <b>Due Date: </b> <script>
+                            document.write(moment("{{ item['due_date'] }}").format('LL'));
+                        </script>
+				</div>
+                <div class="login-form">
+                    <form action="/invoice_detail" method="POST">
+                        <input type="hidden" value="{{ item["id"] }}" name="id">
+                        <input type="submit" value="View Details" class="out-btn" >
+                    </form>
+				</div>
+                <div class="control-group">
+                    <hr>
+				</div>
+                    {% endfor %}
+                {% endif %}
+			</div>
+		</div>
+	</div>
+  <!-- End Product Body -->
+
+      </div>
+      </div>
+    </div>
+</div>
+{% endif %}

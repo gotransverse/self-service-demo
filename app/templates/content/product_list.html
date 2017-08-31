@@ -1,0 +1,51 @@
+<div class="home-banner">
+    <div class="container">
+	  <div class="row">
+	  <div class="center-container">
+{% if not session['logged_in'] %}
+    <p>You must <a href="/">log in</a> to view account information</p>
+    </div>
+      </div>
+    </div>
+</div>
+{% else %}
+     <!-- Begin Product Body -->
+	<div class="login">
+		<div class="login-screen" style="color: #777">
+			<div class="app-title">
+				<h2 style="color: #777">Products</h2>
+			</div>
+
+			<div class="login-form">
+                <hr>
+                {% for item in data %}
+                <br>
+				<div class="control-group">
+                    <b>Product Name:</b> {{ item["name"] }}
+				</div>
+				<div class="control-group">
+                    <b>Product Type:</b> {{ item["product_type"] }}
+				</div>
+                <div class="control-group">
+                    <b>Product ID:</b>{{ item["id"] }}
+				</div>
+                <div class="control-group">
+                    <b>SKU:</b>{{ item["sku"] }}
+				</div>
+                 <div class="control-group">
+                    <b>Description:</b>{{ item["description"] }}
+				</div>
+			    <br>
+                <hr>
+                {% endfor %}
+
+			</div>
+		</div>
+	</div>
+  <!-- End Product Body -->
+
+      </div>
+      </div>
+    </div>
+</div>
+{% endif %}

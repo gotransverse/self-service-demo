@@ -1,0 +1,89 @@
+<div class="home-banner">
+    <div class="container">
+	  <div class="row">
+	  <div class="center-container">
+{% if not session['logged_in'] %}
+    <p>You must <a href="/">log in</a> to view account information</p>
+    </div>
+      </div>
+    </div>
+</div>
+{% else %}
+     <!-- Begin Account Body -->
+	<div class="login">
+		<div class="login-screen" style="color: #777">
+			<div class="app-title">
+				<h2 style="color: #777">Your Profile: {{ session['username'] }}</h2>
+			</div>
+
+			<div class="login-form">
+
+			    <br>
+                <hr>
+                      <table>
+                       <tr>
+                        <div class="control-group">
+                          <td align="right"><label class="login-field-icon fui-user" for="accountID"><b>Account ID: </b></label></td><td>&nbsp;</td><td align="left">{{ lookServer.accountID }}</td>
+                        </div>
+                         </tr>
+                        <tr>
+                       <form action="/profile" method="POST">
+                         <input type="hidden" value="{{ userValues.id }}" name="id">
+                         <input type="hidden" value="{{ userValues.accountID }}" name="accountID">
+
+                        <div class="control-group">
+                         <td align="right"><label class="login-field-icon fui-user" for="username"><b>Username: </b></label></td><td>&nbsp;</td><td align="left"><input type="text" class="login-field" value="{{ userValues.username }}" placeholder="User Name" name="username"></td>
+				        </div>
+                       </tr>
+                         <tr>
+                          <div class="control-group">
+                         <td align="right"><label class="login-field-icon fui-user" for="email"><b>Email: </b></label></td><td>&nbsp;</td><td align="left"><input type="text" class="login-field" value="{{ userValues.email }}" placeholder="Email Address" name="email"></td>
+                        </div>
+                         </tr>
+                          <tr>
+                           <div class="control-group">
+                               <td align="right"><label class="login-field-icon fui-user" for="apiKey"><b>API Key: </b></label></td><td>&nbsp;</td><td align="left"><input type="text" class="login-field" value="{{ userValues.apiKey }}" placeholder="API provided by your Admin" name="apiKey"></td>
+                        </div>
+                          </tr>
+                          <tr>
+                           <div class="control-group">
+                               <td align="right"><label class="login-field-icon fui-user" for="password"><b>Password: </b></label></td><td>&nbsp;</td><td align="left"><input type="password" class="login-field" value="{{ userValues.password }}" placeholder="Make a strong password" name="password"></td>
+                        </div>
+                          </tr>
+                          <tr>
+                         <div class="control-group">
+                             <td align="right"><label class="login-field-icon fui-user" for="useEnv"><b>Use this Environment: </b></label></td><td>&nbsp;</td><td align="left">
+                             <select class="login-field" name="useEnv">
+                                <option value="{{ userValues.useEnv }}">{{ userValues.useEnv }}</option>
+                                {% for item in envValues %}
+                                    {% if item.envName != userValues.useEnv %}
+                                        <option value="{{ item.envName }}">{{ item.envName }}</option>
+                                    {% endif %}
+                                 {% endfor %}
+                             </select>
+                         </td>
+                        </div>
+                          </tr>
+                          <tr>
+                              <td>
+                              <br>
+                              </td>
+                          </tr>
+                          <tr>
+                           <td align="center" colspan="3"><input type="submit" value="Update Profile" class="out-btn" ></td>
+                              </tr>
+
+                              </form>
+                       </table>
+                           <hr>
+
+			</div>
+		</div>
+	</div>
+    <!-- End Account Body -->
+
+      </div>
+      </div>
+    </div>
+</div>
+{% endif %}

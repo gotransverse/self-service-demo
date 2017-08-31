@@ -1,0 +1,65 @@
+
+<div class="home-banner">
+    <div class="container">
+	  <div class="row">
+	  <div class="center-container">
+{% if not session['logged_in'] %}
+    <p>You must <a href="/">log in</a> to view account information</p>
+    </div>
+      </div>
+    </div>
+</div>
+{% else %}
+     <!-- Begin Invoice Body -->
+    {% for item in data %}
+	<div class="container2">
+		<div class="invoice">
+            <header>
+                <section>
+				    <h1>Invoice</h1>
+                    <span>
+                        <script>
+                            document.write(moment("{{ item['due_date'] }}").format('LL'));
+                        </script>
+                    </span>
+                </section>
+                <section>
+                    <span>{{ item['invoice_num'] }}</span>
+                </section>
+            </header>
+			<main>
+                <section>
+                    <span>Product</span>
+                    <span>Qty</span>
+                    <span>Unit Price</span>
+                    <span>Line Price</span>
+                </section>
+                <section>
+                  {% for sub_item in item["invoice_items"] %}
+                  <figure>
+                      <span><strong>{{ sub_item["service"]["product"]["name"] }}</strong></span>
+                      <span>{{ sub_item["quantity"] }}</span>
+                      <span>{{ "${:.2f}".format(sub_item["unit_amount"]) }}</span>
+                      <span>{{ "${:.2f}".format(sub_item["total_amount"]) }}</span>
+                  </figure>
+                  {% endfor %}
+                </section>
+                <section>
+                    <span>Total</span>
+                    <span>{{ "${:.2f}".format(item['amount']) }}</span>
+                </section>
+            </main>
+            <footer>
+                <a href="#0">Dispute</a>
+                <a href="#0">Pay Now</a>
+            </footer>
+        </div>
+    </div>
+    {% endfor %}
+  <!-- End Product Body -->
+
+      </div>
+      </div>
+    </div>
+</div>
+{% endif %}

@@ -1,0 +1,68 @@
+<div class="home-banner">
+    <div class="container">
+	  <div class="row">
+	  <div class="center-container">
+{% if not session['logged_in'] %}
+    <p>You must <a href="/">log in</a> to view account information</p>
+    </div>
+      </div>
+    </div>
+</div>
+{% else %}
+     <!-- Begin Product Body -->
+	<div class="login">
+		<div class="login-screen" style="color: #777">
+			<div class="app-title">
+				<h2 style="color: #777">Invoices</h2>
+			</div>
+
+			<div class="login-form">
+                <hr>
+                {% if not data %}
+                <br>
+				<div class="control-group">
+                    <b>No Outstanding Invoices</b>
+                </div>
+                {% else %}
+                    {% for item in data %}
+				<div class="control-group">
+                    <b>Invoice #: </b> {{ item['invoice_num'] }}
+				</div>
+                 <div class="control-group">
+                    <b>Invoice Total: </b> {{ item['amount'] }}
+				</div>
+                <div class="control-group">
+                    <b>Due Date: </b>{{ item['due_date'] }}
+				</div>
+                <div class="control-group">
+                    <hr>
+				</div>
+			    <br>
+                   <div class="control-group">
+                       <b>Invoice Line Items</b>
+                        <hr>
+				</div>
+                        {% for sub_item in item["invoice_items"] %}
+                          <div class="control-group">
+                            <b>Item: </b>{{ sub_item["service"]["product"]["name"] }}
+                          </div>
+                           <div class="control-group">
+                            <b>Quantiy: </b>{{ sub_item["unit_amount"] }}
+                          </div>
+                            <div class="control-group">
+                            <b>Total Charges: </b>{{ sub_item["total_amount"] }}
+                          </div>
+                            <hr>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+			</div>
+		</div>
+	</div>
+  <!-- End Product Body -->
+
+      </div>
+      </div>
+    </div>
+</div>
+{% endif %}

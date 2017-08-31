@@ -1,0 +1,114 @@
+<div class="home-banner">
+    <div class="container">
+	  <div class="row">
+	  <div class="center-container">
+{% if not session['logged_in'] %}
+    <p>You must <a href="/">log in</a> to view account information</p>
+    </div>
+      </div>
+    </div>
+</div>
+{% else %}
+     <!-- Begin Account Body -->
+	<div class="login">
+		<div class="login-screen" style="color: #777">
+			<div class="app-title">
+				<h2 style="color: #777">Account Info</h2>
+			</div>
+
+			<div class="login-form">
+                <hr>
+                <br>
+				<div class="control-group">
+                    <b>Account Number:</b> {{ actNum }}
+				</div>
+			    <br>
+            	<div class="control-group">
+                    <b><a href="/account"> Back to Account Info</a></b>
+				</div>
+			    <br>
+                <hr>
+                <h3>Addresses</h3>
+                {% for item in data["responsible_party"]["addresses"] %}
+                    {% set adrCount = 0 %}
+                       {% if item["address_type"] == "postal" %}
+                      <table>
+                       <tr>
+                       <form action="/account_addresses" method="POST">
+                         <input type="hidden" value="{{ data["responsible_party"]["id"] }}" name="responsible_id">
+                           <input type="hidden" value="{{ item["id"] }}" name="id">
+                           <input type="hidden" value="{{ item["address_type"] }}" name="address_type">
+
+                        <div class="control-group">
+                         <td align="right"><label class="login-field-icon fui-user" for="purpose"><b>Address Type: </b></label></td><td>&nbsp;</td><td align="left"><input type="text" class="login-field" value="{{ item["purpose"] }}" placeholder="Address Type" name="purpose"></td>
+				        </div>
+                       </tr>
+                         <tr>
+                          <div class="control-group">
+                         <td align="right"><label class="login-field-icon fui-user" for="line1"><b>Address Number: </b></label></td><td>&nbsp;</td><td align="left"><input type="text" class="login-field" value="{{ item["line2"] }}" placeholder="Address Number" name="line1"></td>
+                        </div>
+                         </tr>
+                          <tr>
+                         <div class="control-group">
+                          <td align="right"><label class="login-field-icon fui-user" for="line1"><b>Street: </b></label></td><td>&nbsp;</td><td align="left"><input type="text" class="login-field" value="{{ item["line1"] }}" placeholder="Street" name="line2"></td>
+                        </div>
+                          </tr>
+                          <tr>
+                           <div class="control-group">
+                               <td align="right"><label class="login-field-icon fui-user" for="city"><b>City: </b></label></td><td>&nbsp;</td><td align="left"><input type="text" class="login-field" value="{{ item["city"] }}" placeholder="City" name="city"></td>
+                        </div>
+                          </tr>
+                          <tr>
+                         <div class="control-group">
+                             <td align="right"><label class="login-field-icon fui-user" for="region_or_state"><b>State: </b></label></td><td>&nbsp;</td><td align="left"><input type="text" class="login-field" value="{{ item["region_or_state"] }}" placeholder="State" name="region_or_state"></td>
+                        </div>
+                          </tr>
+                          <tr>
+                        <div class="control-group">
+                            <td align="right"><label class="login-field-icon fui-user" for="postal_code"><b>Zip: </b></label></td><td>&nbsp;</td><td align="left"><input type="text" class="login-field" value="{{ item["postal_code"] }}" placeholder="Zip Code" name="postal_code"></td>
+                        </div>
+                          </tr>
+                          <tr>
+                              <td>
+                              <br>
+                              </td>
+                          </tr>
+                          <tr>
+                           <td align="center" colspan="3"><input type="submit" value="Update" class="out-btn" ></td>
+                              </tr>
+
+                              </form>
+                       </table>
+                           <hr>
+                        {% set adrCount = 'postal' %}
+                        {% else %}
+                            {% if item["address_type"] == "email" %}
+                           {% set msgAdr = 'Only email addresses on Record - update those in Profile' %}
+                            {% endif %}
+                       {% endif %}
+
+
+                {% if adrCount == 'postal' %}
+                    <tr>
+                              <td>
+                              </td>
+                          </tr>
+                    {% else %}
+                         <tr>
+                              <td>
+                                 Message: {{ msgAdr|default('No Addresses on Record') }}.
+                              <br>
+                              </td>
+                          </tr>
+                       {% endif %}
+            {% endfor %}
+			</div>
+		</div>
+	</div>
+    <!-- End Account Body -->
+
+      </div>
+      </div>
+    </div>
+</div>
+{% endif %}

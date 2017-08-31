@@ -1,0 +1,53 @@
+<div class="home-banner">
+    <div class="container">
+	  <div class="row">
+	  <div class="center-container">
+{% if not session['logged_in'] %}
+    <p>You must <a href="/">log in</a> to view account information</p>
+    </div>
+      </div>
+    </div>
+</div>
+{% else %}
+     <!-- Begin Account Body -->
+	<div class="login">
+		<div class="login-screen" style="color: #777">
+			<div class="app-title">
+				<h2 style="color: #777">Account Info</h2>
+			</div>
+
+			<div class="login-form">
+                <hr>
+                <br>
+				<div class="control-group">
+                    <b>Account Number:</b> {{ actNum }}
+				</div>
+
+				<div class="control-group">
+                    <b>Account Status:</b> {{ actStatus }}
+				</div>
+                <div class="control-group">
+                    <b>Payment Terms:</b> {{ data["payment_term"]["name"] }}
+				</div>
+                <div class="control-group">
+                    <b>Pending Charges:</b> {{ actCharges }}
+				</div>
+                <div class="control-group">
+                    <b>Next Invoice Due:</b> {{ nxtInvoiceDate }}
+				</div>
+			    <br>
+                <div class="control-group">
+                    <b><a href="/account_addresses">Account Addresses</a></b>
+				</div>
+			    <br>
+
+			</div>
+		</div>
+	</div>
+    <!-- End Account Body -->
+
+      </div>
+      </div>
+    </div>
+</div>
+{% endif %}
